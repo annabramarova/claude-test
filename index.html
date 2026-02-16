@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Att-Las – Curated Luxury Pre-Owned Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #FAF7F2;
+            --color-warm-gray: #E8E3DB;
+            --color-dark: #2A2520;
+            --color-accent: #4A5D3F;
+            --color-accent-light: #7A8D6F;
+            --color-border: #D4CFC5;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1.5rem 2rem;
+            animation: slideDown 0.6s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--color-dark);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .menu-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.2s ease;
+            display: none;
+        }
+        
+        .menu-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--color-cream);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--color-dark);
+        }
+        
+        .mobile-menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .mobile-menu-links li {
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .mobile-menu-links a {
+            display: block;
+            padding: 1.5rem 0;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 300;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 85vh;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            padding: var(--spacing-xl) 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            align-items: center;
+        }
+        
+        .hero-content {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .hero-content {
+            animation: fadeInLeft 0.8s ease-out 0.2s both;
+        }
+        
+        .hero-image {
+            animation: fadeInRight 0.8s ease-out 0.4s both;
+        }
+        
+        .trust-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .trust-item:hover .trust-icon {
+            transform: scale(1.1);
+            color: var(--color-dark);
+        }
+        
+        .vetted-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .boutique-card:hover .vetted-badge {
+            background: var(--color-accent);
+            color: white;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5A524A;
+            margin-bottom: 3rem;
+            max-width: 500px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            font-weight: 400;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            pointer-events: none;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .btn:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 93, 63, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background: var(--color-dark);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(42, 37, 32, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px) scale(1);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-dark);
+            border: 2px solid var(--color-dark);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-dark);
+            color: white;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(42, 37, 32, 0.2);
+        }
+        
+        .btn-secondary:active {
+            transform: translateY(-1px) scale(1);
+        }
+        
+        .hero-image {
+            position: relative;
+            height: 600px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .hero-badge {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-left: 3px solid var(--color-accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .badge-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 0.25rem;
+        }
+        
+        .badge-value {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        
+        /* Trust Signals */
+        .trust-section {
+            background: white;
+            padding: var(--spacing-lg) 2rem;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .trust-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .trust-item {
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+        
+        .trust-item:nth-child(1) { animation-delay: 0.1s; }
+        .trust-item:nth-child(2) { animation-delay: 0.2s; }
+        .trust-item:nth-child(3) { animation-delay: 0.3s; }
+        
+        .trust-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+        
+        .trust-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .trust-description {
+            color: #5A524A;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* Featured Boutiques */
+        .featured-boutiques {
+            padding: var(--spacing-xl) 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .section-subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #5A524A;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .boutiques-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+        
+        .boutique-card {
+            background: white;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--color-border);
+        }
+        
+        .boutique-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: var(--color-accent);
+        }
+        
+        .boutique-image {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .boutique-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .boutique-card:hover .boutique-image img {
+            transform: scale(1.05);
+        }
+        
+        .vetted-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            font-weight: 500;
+            border: 1px solid var(--color-accent);
+        }
+        
+        .boutique-info {
+            padding: 2rem;
+        }
+        
+        .boutique-name {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .boutique-location {
+            color: #5A524A;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .boutique-description {
+            color: #5A524A;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .view-boutique {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .view-boutique::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+        
+        .view-boutique:hover {
+            color: var(--color-dark);
+        }
+        
+        .view-boutique:hover::after {
+            transform: translateX(5px);
+        }
+        
+        /* Categories Section */
+        .categories-section {
+            background: white;
+            padding: var(--spacing-xl) 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .categories-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .category-card {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--color-border);
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover::before {
+            background: linear-gradient(to bottom, rgba(74,93,63,0.2) 0%, rgba(0,0,0,0.7) 100%);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .category-label {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 2;
+            color: white;
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-card:hover .category-label {
+            transform: translateX(5px);
+        }
+        
+        /* New In Section */
+        .new-in-section {
+            padding: var(--spacing-xl) 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .product-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            background: var(--color-warm-gray);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-boutique {
+            font-size: 0.85rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .product-name {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+        
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--color-dark);
+            color: var(--color-warm-gray);
+            padding: var(--spacing-lg) 2rem 2rem;
+            margin-top: var(--spacing-xl);
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-cream);
+        }
+        
+        .footer-description {
+            line-height: 1.7;
+            color: #B8B0A6;
+        }
+        
+        .footer-column h4 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-cream);
+            font-weight: 400;
+        }
+        
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .footer-links a {
+            color: #B8B0A6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-cream);
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 207, 197, 0.2);
+            text-align: center;
+            color: #B8B0A6;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-icon {
+                display: block;
+            }
+            
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 3rem 1.5rem;
+                gap: 2rem;
+            }
+            
+            .hero-image {
+                height: 400px;
+            }
+            
+            .hero-badge {
+                left: 1rem;
+                bottom: 1rem;
+                padding: 1rem 1.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .trust-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .boutiques-grid,
+            .categories-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Att-Las</a>
+            <ul class="nav-links">
+                <li><a href="#boutiques">Boutiques</a></li>
+                <li><a href="#categories">Shop</a></li>
+                <li><a href="#new-in">New In</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <span class="menu-icon" onclick="toggleMobileMenu()">☰</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">×</button>
+        <ul class="mobile-menu-links">
+            <li><a href="#boutiques" onclick="toggleMobileMenu()">Boutiques</a></li>
+            <li><a href="#categories" onclick="toggleMobileMenu()">Shop</a></li>
+            <li><a href="#new-in" onclick="toggleMobileMenu()">New In</a></li>
+            <li><a href="about.html" onclick="toggleMobileMenu()">About</a></li>
+            <li><a href="how-it-works.html" onclick="toggleMobileMenu()">How It Works</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">Curated Luxury</div>
+            <h1 class="hero-title">Pre-Owned Fashion from Vetted Boutiques</h1>
+            <p class="hero-description">
+                Discover premium second-hand pieces from trusted independent boutiques. 
+                Every item curated, every seller verified.
+            </p>
+            <div class="cta-buttons">
+                <a href="#boutiques" class="btn btn-primary">Explore Boutiques</a>
+                <a href="#categories" class="btn btn-secondary">Shop Collection</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=1000&fit=crop" alt="Luxury Fashion">
+            <div class="hero-badge">
+                <div class="badge-label">Vetted Boutiques</div>
+                <div class="badge-value">50+</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <div class="trust-item">
+                <div class="trust-icon">✓</div>
+                <h3 class="trust-title">Vetted Boutiques Only</h3>
+                <p class="trust-description">Every seller is a verified independent boutique with a proven track record</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">◇</div>
+                <h3 class="trust-title">Curated Selection</h3>
+                <p class="trust-description">Hand-picked pieces that meet our quality and authenticity standards</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">⟡</div>
+                <h3 class="trust-title">Luxury Experience</h3>
+                <p class="trust-description">Premium service without the premium price tag</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Boutiques -->
+    <section id="boutiques" class="featured-boutiques">
+        <div class="section-header">
+            <div class="section-subtitle">Featured Boutiques</div>
+            <h2 class="section-title">Discover Our Curated Selection</h2>
+            <p class="section-description">
+                Each boutique is personally vetted and selected for their expertise, 
+                authenticity, and commitment to quality.
+            </p>
+        </div>
+        
+        <div class="boutiques-grid">
+            <div class="boutique-card" onclick="window.location.href='boutique.html'">
+                <div class="boutique-image">
+                    <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=400&fit=crop" alt="Boutique">
+                    <div class="vetted-badge">Att-Las Vetted</div>
+                </div>
+                <div class="boutique-info">
+                    <h3 class="boutique-name">Maison Belle</h3>
+                    <p class="boutique-location">Paris, France</p>
+                    <p class="boutique-description">
+                        Specializing in French designer pieces and vintage Hermès, 
+                        with over 15 years of expertise in luxury fashion.
+                    </p>
+                    <a href="boutique.html" class="view-boutique">View Boutique</a>
+                </div>
+            </div>
+            
+            <div class="boutique-card" onclick="window.location.href='boutique.html'">
+                <div class="boutique-image">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=400&fit=crop" alt="Boutique">
+                    <div class="vetted-badge">Att-Las Vetted</div>
+                </div>
+                <div class="boutique-info">
+                    <h3 class="boutique-name">Luna Luxury</h3>
+                    <p class="boutique-location">Milan, Italy</p>
+                    <p class="boutique-description">
+                        Curated Italian luxury with a focus on contemporary designers 
+                        and rare vintage finds.
+                    </p>
+                    <a href="boutique.html" class="view-boutique">View Boutique</a>
+                </div>
+            </div>
+            
+            <div class="boutique-card" onclick="window.location.href='boutique.html'">
+                <div class="boutique-image">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=400&fit=crop" alt="Boutique">
+                    <div class="vetted-badge">Att-Las Vetted</div>
+                </div>
+                <div class="boutique-info">
+                    <h3 class="boutique-name">The Edit</h3>
+                    <p class="boutique-location">London, UK</p>
+                    <p class="boutique-description">
+                        British luxury specialists with an exceptional collection 
+                        of Burberry, Mulberry, and Alexander McQueen.
+                    </p>
+                    <a href="boutique.html" class="view-boutique">View Boutique</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="categories-section">
+        <div class="categories-container">
+            <div class="section-header">
+                <div class="section-subtitle">Shop by Category</div>
+                <h2 class="section-title">Find Your Perfect Piece</h2>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card" onclick="window.location.href='category.html'">
+                    <img src="https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&h=500&fit=crop" alt="Handbags">
+                    <div class="category-label">Handbags</div>
+                </div>
+                
+                <div class="category-card" onclick="window.location.href='category.html'">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop" alt="Ready to Wear">
+                    <div class="category-label">Ready to Wear</div>
+                </div>
+                
+                <div class="category-card" onclick="window.location.href='category.html'">
+                    <img src="https://images.unsplash.com/photo-1506152983158-b4a74a01c721?w=400&h=500&fit=crop" alt="Shoes">
+                    <div class="category-label">Shoes</div>
+                </div>
+                
+                <div class="category-card" onclick="window.location.href='category.html'">
+                    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=500&fit=crop" alt="Jewelry">
+                    <div class="category-label">Jewelry</div>
+                </div>
+                
+                <div class="category-card" onclick="window.location.href='category.html'">
+                    <img src="https://images.unsplash.com/photo-1591561954555-607968b99914?w=400&h=500&fit=crop" alt="Accessories">
+                    <div class="category-label">Accessories</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New In Section -->
+    <section id="new-in" class="new-in-section">
+        <div class="section-header">
+            <div class="section-subtitle">Latest Arrivals</div>
+            <h2 class="section-title">New In This Week</h2>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="product-boutique">Maison Belle</div>
+                <h3 class="product-name">Hermès Kelly 28</h3>
+                <p class="product-price">€8,500</p>
+            </div>
+            
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="product-boutique">Luna Luxury</div>
+                <h3 class="product-name">Prada Saffiano Tote</h3>
+                <p class="product-price">€1,200</p>
+            </div>
+            
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="product-boutique">The Edit</div>
+                <h3 class="product-name">Burberry Trench Coat</h3>
+                <p class="product-price">€950</p>
+            </div>
+            
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="product-boutique">Maison Belle</div>
+                <h3 class="product-name">Chanel Classic Flap</h3>
+                <p class="product-price">€5,800</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div>
+                <div class="footer-brand">Att-Las</div>
+                <p class="footer-description">
+                    Curated luxury pre-owned fashion from verified independent boutiques. 
+                    Discover premium pieces with confidence.
+                </p>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Shop</h4>
+                <ul class="footer-links">
+                    <li><a href="#boutiques">Boutiques</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#new-in">New In</a></li>
+                    <li><a href="#">Brands</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>About</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="how-it-works.html">How It Works</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            © 2026 Att-Las. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body>
+</html>

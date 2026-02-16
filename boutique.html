@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Belle – Att-Las</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #FAF7F2;
+            --color-warm-gray: #E8E3DB;
+            --color-dark: #2A2520;
+            --color-accent: #4A5D3F;
+            --color-accent-light: #7A8D6F;
+            --color-border: #D4CFC5;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1.5rem 2rem;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--color-dark);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .search-icon, .menu-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .menu-icon {
+            display: none;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--color-cream);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--color-dark);
+        }
+        
+        .mobile-menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .mobile-menu-links li {
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .mobile-menu-links a {
+            display: block;
+            padding: 1.5rem 0;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 300;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Boutique Header */
+        .boutique-header {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: start;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .boutique-hero-image {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .boutique-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .vetted-badge-large {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .badge-icon {
+            color: var(--color-accent);
+            font-size: 1.5rem;
+        }
+        
+        .badge-text {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            color: var(--color-accent);
+        }
+        
+        .boutique-info {
+            padding-top: 1rem;
+        }
+        
+        .breadcrumb {
+            font-size: 0.9rem;
+            color: #5A524A;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--color-accent);
+        }
+        
+        .boutique-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 300;
+            border: 2px solid var(--color-border);
+            background: white;
+        }
+        
+        .boutique-name {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        
+        .boutique-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #5A524A;
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .location-icon {
+            font-size: 1.2rem;
+        }
+        
+        .boutique-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5A524A;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+        
+        .boutique-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #5A524A;
+            letter-spacing: 0.05em;
+        }
+        
+        /* About Section */
+        .about-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .about-content h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-content p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #5A524A;
+            margin-bottom: 1.5rem;
+        }
+        
+        .specialties {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        
+        .specialties li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .specialty-icon {
+            color: var(--color-accent);
+            font-size: 1.2rem;
+        }
+        
+        .about-image {
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Products Section */
+        .products-section {
+            background: white;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+        
+        .view-all {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+        
+        .view-all:hover {
+            gap: 1rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .product-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            background: var(--color-warm-gray);
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .wishlist-btn:hover {
+            background: var(--color-accent);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .product-brand {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .product-name {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 400;
+            color: #5A524A;
+        }
+        
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .product-condition {
+            font-size: 0.85rem;
+            color: var(--color-accent);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background: var(--color-warm-gray);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-container h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-container p {
+            font-size: 1.1rem;
+            color: #5A524A;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background: var(--color-dark);
+            color: white;
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-btn:hover {
+            background: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-icon {
+                display: block;
+            }
+            
+            .boutique-header {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .boutique-hero-image {
+                height: 350px;
+            }
+            
+            .boutique-name {
+                font-size: 2.5rem;
+            }
+            
+            .boutique-stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .about-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-image {
+                height: 400px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .product-image {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Att-Las</a>
+            <ul class="nav-links">
+                <li><a href="index.html#boutiques">Boutiques</a></li>
+                <li><a href="category.html">Shop</a></li>
+                <li><a href="index.html#new-in">New In</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                
+                <span class="menu-icon" onclick="toggleMobileMenu()">☰</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">×</button>
+        <ul class="mobile-menu-links">
+            <li><a href="index.html#boutiques" onclick="toggleMobileMenu()">Boutiques</a></li>
+            <li><a href="category.html" onclick="toggleMobileMenu()">Shop</a></li>
+            <li><a href="index.html#new-in" onclick="toggleMobileMenu()">New In</a></li>
+            <li><a href="about.html" onclick="toggleMobileMenu()">About</a></li>
+            <li><a href="how-it-works.html" onclick="toggleMobileMenu()">How It Works</a></li>
+        </ul>
+    </div>
+
+    <!-- Boutique Header -->
+    <section class="boutique-header">
+        <div class="boutique-hero-image">
+            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&h=1000&fit=crop" alt="Maison Belle">
+            <div class="vetted-badge-large">
+                <span class="badge-icon">✓</span>
+                <span class="badge-text">Att-Las Vetted</span>
+            </div>
+        </div>
+        
+        <div class="boutique-info">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <a href="index.html#boutiques">Boutiques</a> / Maison Belle
+            </div>
+            
+            <div class="boutique-logo">MB</div>
+            
+            <h1 class="boutique-name">Maison Belle</h1>
+            
+            <div class="boutique-location">
+                <span class="location-icon">📍</span>
+                Paris, France
+            </div>
+            
+            <p class="boutique-description">
+                Established in 2008, Maison Belle is a premier Parisian boutique specializing in 
+                authenticated luxury handbags and accessories. With over 15 years of expertise, 
+                we curate an exceptional collection of French designer pieces, vintage Hermès, 
+                and rare finds from the world's most prestigious fashion houses.
+            </p>
+            
+            <div class="boutique-stats">
+                <div class="stat-item">
+                    <div class="stat-value">15+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">500+</div>
+                    <div class="stat-label">Items Sold</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4.9</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-content">
+            <h2>Our Story</h2>
+            <p>
+                Founded by luxury fashion expert Isabelle Moreau, Maison Belle began as a small 
+                Parisian atelier dedicated to preserving the artistry of vintage luxury fashion. 
+                What started as a passion project has evolved into one of Europe's most trusted 
+                sources for authenticated pre-owned luxury goods.
+            </p>
+            <p>
+                Every piece in our collection is meticulously authenticated by our team of experts, 
+                ensuring that each item meets our exacting standards for quality and provenance. 
+                We believe that luxury fashion is timeless, and our mission is to give exceptional 
+                pieces a second life with discerning collectors who appreciate true craftsmanship.
+            </p>
+            
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;">Our Specialties</h3>
+            <ul class="specialties">
+                <li>
+                    <span class="specialty-icon">◆</span>
+                    Vintage Hermès Birkin & Kelly bags
+                </li>
+                <li>
+                    <span class="specialty-icon">◆</span>
+                    Chanel Classic Flap collections
+                </li>
+                <li>
+                    <span class="specialty-icon">◆</span>
+                    Louis Vuitton limited editions
+                </li>
+                <li>
+                    <span class="specialty-icon">◆</span>
+                    Rare designer accessories
+                </li>
+            </ul>
+        </div>
+        
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop" alt="Boutique Interior">
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="products-container">
+            <div class="section-header">
+                <h2 class="section-title">Current Collection</h2>
+                <a href="category.html" class="view-all">View All (28) →</a>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card" onclick="window.location.href='product.html'">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=600&fit=crop" alt="Product">
+                        <button class="wishlist-btn">♡</button>
+                    </div>
+                    <div class="product-brand">Hermès</div>
+                    <div class="product-name">Kelly 28 Sellier Black</div>
+                    <div class="product-details">
+                        <div class="product-price">€8,500</div>
+                        <div class="product-condition">Excellent</div>
+                    </div>
+                </div>
+                
+                <div class="product-card" onclick="window.location.href='product.html'">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=600&fit=crop" alt="Product">
+                        <button class="wishlist-btn">♡</button>
+                    </div>
+                    <div class="product-brand">Chanel</div>
+                    <div class="product-name">Classic Medium Flap</div>
+                    <div class="product-details">
+                        <div class="product-price">€5,800</div>
+                        <div class="product-condition">Excellent</div>
+                    </div>
+                </div>
+                
+                <div class="product-card" onclick="window.location.href='product.html'">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&h=600&fit=crop" alt="Product">
+                        <button class="wishlist-btn">♡</button>
+                    </div>
+                    <div class="product-brand">Louis Vuitton</div>
+                    <div class="product-name">Speedy 30 Bandoulière</div>
+                    <div class="product-details">
+                        <div class="product-price">€1,250</div>
+                        <div class="product-condition">Very Good</div>
+                    </div>
+                </div>
+                
+                <div class="product-card" onclick="window.location.href='product.html'">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1591561954555-607968b99914?w=400&h=600&fit=crop" alt="Product">
+                        <button class="wishlist-btn">♡</button>
+                    </div>
+                    <div class="product-brand">Dior</div>
+                    <div class="product-name">Lady Dior Medium</div>
+                    <div class="product-details">
+                        <div class="product-price">€3,200</div>
+                        <div class="product-condition">Excellent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <h2>Have Questions?</h2>
+            <p>
+                Our team is here to help you find the perfect piece or answer any questions 
+                about our collection and authentication process.
+            </p>
+            <a href="#" class="contact-btn">Contact Maison Belle</a>
+        </div>
+    </section>
+
+    <script>
+        
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body>
+</html>

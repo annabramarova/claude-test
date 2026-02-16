@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us – Att-Las</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #FAF7F2;
+            --color-warm-gray: #E8E3DB;
+            --color-dark: #2A2520;
+            --color-accent: #4A5D3F;
+            --color-accent-light: #7A8D6F;
+            --color-border: #D4CFC5;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1.5rem 2rem;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--color-dark);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .search-icon, .menu-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .menu-icon {
+            display: none;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--color-cream);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--color-dark);
+        }
+        
+        .mobile-menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .mobile-menu-links li {
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .mobile-menu-links a {
+            display: block;
+            padding: 1.5rem 0;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 300;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Hero */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        
+        .hero-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #5A524A;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Story Section */
+        .story-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        
+        .story-image {
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .story-content h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+        
+        .story-content p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #5A524A;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Values Section */
+        .values-section {
+            background: white;
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .value-item {
+            text-align: center;
+        }
+        
+        .value-icon {
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .value-item:hover .value-icon {
+            transform: scale(1.2) rotate(10deg);
+            color: var(--color-dark);
+            filter: drop-shadow(0 4px 20px rgba(74, 93, 63, 0.3));
+        }
+        
+        .value-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .value-description {
+            color: #5A524A;
+            line-height: 1.7;
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .member-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            border: 3px solid var(--color-border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .team-member:hover .member-image {
+            border-color: var(--color-accent);
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(74, 93, 63, 0.3);
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .member-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .member-role {
+            color: var(--color-accent);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .member-bio {
+            color: #5A524A;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: var(--color-dark);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-container h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-container p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background: white;
+            color: var(--color-dark);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(74, 93, 63, 0.8) 0%, var(--color-accent) 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+        
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 1;
+        }
+        
+        .cta-button:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .cta-button:hover {
+            color: white;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-button:active {
+            transform: translateY(-2px) scale(1);
+        }
+        
+        .cta-button span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Mobile */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-icon {
+                display: block;
+            }
+            
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+            
+            .story-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .story-image {
+                height: 400px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Att-Las</a>
+            <ul class="nav-links">
+                <li><a href="index.html#boutiques">Boutiques</a></li>
+                <li><a href="category.html">Shop</a></li>
+                <li><a href="index.html#new-in">New In</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                
+                <span class="menu-icon" onclick="toggleMobileMenu()">☰</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">×</button>
+        <ul class="mobile-menu-links">
+            <li><a href="index.html#boutiques" onclick="toggleMobileMenu()">Boutiques</a></li>
+            <li><a href="category.html" onclick="toggleMobileMenu()">Shop</a></li>
+            <li><a href="index.html#new-in" onclick="toggleMobileMenu()">New In</a></li>
+            <li><a href="about.html" onclick="toggleMobileMenu()">About</a></li>
+            <li><a href="how-it-works.html" onclick="toggleMobileMenu()">How It Works</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-subtitle">About Att-Las</div>
+        <h1 class="hero-title">Redefining Pre-Owned Luxury</h1>
+        <p class="hero-description">
+            We're building a marketplace where trust, curation, and discovery come together. 
+            Every boutique vetted. Every piece authenticated. Every experience elevated.
+        </p>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="story-content">
+            <h2>Our Story</h2>
+            <p>
+                Att-Las was born from a simple observation: luxury pre-owned fashion deserved 
+                better than peer-to-peer marketplaces. We envisioned a platform where discerning 
+                buyers could shop with the same confidence and experience they expect from 
+                Net-a-Porter or MyTheresa—but for pre-owned pieces.
+            </p>
+            <p>
+                We partnered exclusively with established independent boutiques—real businesses 
+                with proven track records, expertise, and reputations to uphold. No anonymous 
+                sellers. No uncertainty. Just trusted boutiques offering authenticated luxury.
+            </p>
+            <p>
+                Today, Att-Las connects you with a curated network of vetted boutiques across 
+                Europe, each bringing their own expertise and carefully selected inventory to 
+                our platform.
+            </p>
+        </div>
+        <div class="story-image">
+            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&h=1000&fit=crop" alt="Boutique">
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="values-container">
+            <h2 class="section-title">What We Stand For</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">✓</div>
+                    <h3 class="value-title">Trust First</h3>
+                    <p class="value-description">
+                        Every boutique is personally vetted. Every item is authenticated. 
+                        We never compromise on quality or integrity.
+                    </p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">◇</div>
+                    <h3 class="value-title">Curated Excellence</h3>
+                    <p class="value-description">
+                        We believe in quality over quantity. Our boutiques are selected for 
+                        their expertise, reputation, and commitment to excellence.
+                    </p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">⟡</div>
+                    <h3 class="value-title">Discovery Experience</h3>
+                    <p class="value-description">
+                        Shopping should be a journey. We showcase boutiques as destinations, 
+                        each with their own story and specialty.
+                    </p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">◆</div>
+                    <h3 class="value-title">Sustainability</h3>
+                    <p class="value-description">
+                        Luxury fashion is made to last. By giving premium pieces a second life, 
+                        we're building a more sustainable future.
+                    </p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">✦</div>
+                    <h3 class="value-title">Community</h3>
+                    <p class="value-description">
+                        We support independent boutiques and connect them with buyers who 
+                        value craftsmanship and authenticity.
+                    </p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">⬡</div>
+                    <h3 class="value-title">Transparency</h3>
+                    <p class="value-description">
+                        Clear pricing. Honest descriptions. Complete authentication details. 
+                        You deserve to shop with confidence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <h2 class="section-title">Meet the Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" alt="Team Member">
+                </div>
+                <h3 class="member-name">Sophie Laurent</h3>
+                <p class="member-role">Founder & CEO</p>
+                <p class="member-bio">
+                    Former luxury retail buyer with 15 years at Net-a-Porter and MyTheresa. 
+                    Passionate about sustainable luxury.
+                </p>
+            </div>
+            
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop" alt="Team Member">
+                </div>
+                <h3 class="member-name">Marcus Chen</h3>
+                <p class="member-role">Head of Boutique Partnerships</p>
+                <p class="member-bio">
+                    Luxury authentication expert and former Christie's specialist. 
+                    Personally vets every boutique partner.
+                </p>
+            </div>
+            
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop" alt="Team Member">
+                </div>
+                <h3 class="member-name">Elena Rossi</h3>
+                <p class="member-role">Creative Director</p>
+                <p class="member-bio">
+                    Former fashion editor at Vogue Italia. Brings editorial vision 
+                    to every aspect of the Att-Las experience.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Start Exploring</h2>
+            <p>
+                Discover exceptional pieces from trusted boutiques. Every item authenticated, 
+                every seller verified, every experience elevated.
+            </p>
+            <a href="index.html#boutiques" class="cta-button">Explore Boutiques</a>
+        </div>
+    </section>
+
+    <script>
+        
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body>
+</html>

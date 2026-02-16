@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works – Att-Las</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #FAF7F2;
+            --color-warm-gray: #E8E3DB;
+            --color-dark: #2A2520;
+            --color-accent: #4A5D3F;
+            --color-accent-light: #7A8D6F;
+            --color-border: #D4CFC5;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1.5rem 2rem;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--color-dark);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .search-icon, .menu-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .menu-icon {
+            display: none;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--color-cream);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--color-dark);
+        }
+        
+        .mobile-menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .mobile-menu-links li {
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .mobile-menu-links a {
+            display: block;
+            padding: 1.5rem 0;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 300;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Hero */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem 4rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        
+        .hero-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #5A524A;
+        }
+        
+        /* Steps Section */
+        .steps-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        
+        .step {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 3rem;
+            margin-bottom: 5rem;
+            padding-bottom: 5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .step-number {
+            font-family: var(--font-display);
+            font-size: 6rem;
+            font-weight: 300;
+            color: var(--color-accent);
+            line-height: 1;
+            opacity: 0.3;
+        }
+        
+        .step-content h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5A524A;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .feature-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* Vetting Process */
+        .vetting-section {
+            background: white;
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .vetting-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #5A524A;
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .vetting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+        
+        .vetting-item {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid var(--color-border);
+            background: var(--color-cream);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vetting-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(74, 93, 63, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .vetting-item:hover::before {
+            left: 100%;
+        }
+        
+        .vetting-item:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-accent);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .vetting-icon {
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .vetting-item:hover .vetting-icon {
+            transform: scale(1.2) rotate(-10deg);
+            color: var(--color-dark);
+        }
+        
+        .vetting-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .vetting-description {
+            color: #5A524A;
+            line-height: 1.7;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-question {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-answer {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #5A524A;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: var(--color-dark);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-container h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-container p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+        
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 1;
+        }
+        
+        .cta-button:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .cta-button-primary {
+            background: white;
+            color: var(--color-dark);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        .cta-button-primary::before {
+            background: radial-gradient(circle, rgba(74, 93, 63, 0.8) 0%, var(--color-accent) 70%);
+        }
+        
+        .cta-button-primary:hover {
+            color: white;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-button-primary:active {
+            transform: translateY(-2px) scale(1);
+        }
+        
+        .cta-button-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .cta-button-secondary::before {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, white 70%);
+        }
+        
+        .cta-button-secondary:hover {
+            color: var(--color-dark);
+            transform: translateY(-4px) scale(1.02);
+        }
+        
+        .cta-button-secondary:active {
+            transform: translateY(-2px) scale(1);
+        }
+        
+        .cta-button span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Mobile */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-icon {
+                display: block;
+            }
+            
+            .hero {
+                padding: 3rem 1.5rem 2rem;
+            }
+            
+            .step {
+                grid-template-columns: 60px 1fr;
+                gap: 1.5rem;
+                margin-bottom: 3rem;
+                padding-bottom: 3rem;
+            }
+            
+            .step-number {
+                font-size: 4rem;
+            }
+            
+            .step-content h2 {
+                font-size: 1.75rem;
+            }
+            
+            .vetting-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Att-Las</a>
+            <ul class="nav-links">
+                <li><a href="index.html#boutiques">Boutiques</a></li>
+                <li><a href="category.html">Shop</a></li>
+                <li><a href="index.html#new-in">New In</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                
+                <span class="menu-icon" onclick="toggleMobileMenu()">☰</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">×</button>
+        <ul class="mobile-menu-links">
+            <li><a href="index.html#boutiques" onclick="toggleMobileMenu()">Boutiques</a></li>
+            <li><a href="category.html" onclick="toggleMobileMenu()">Shop</a></li>
+            <li><a href="index.html#new-in" onclick="toggleMobileMenu()">New In</a></li>
+            <li><a href="about.html" onclick="toggleMobileMenu()">About</a></li>
+            <li><a href="how-it-works.html" onclick="toggleMobileMenu()">How It Works</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-subtitle">How It Works</div>
+        <h1 class="hero-title">Your Guide to Shopping Att-Las</h1>
+        <p class="hero-description">
+            From discovery to purchase, we've designed every step to give you 
+            confidence, clarity, and a premium experience.
+        </p>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="steps-section">
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h2>Discover Boutiques</h2>
+                <p>
+                    Browse our curated selection of vetted independent boutiques. Each one 
+                    brings unique expertise—whether it's vintage Hermès, contemporary Italian 
+                    designers, or rare limited editions.
+                </p>
+                <p>
+                    Every boutique profile shows their location, specialties, years of experience, 
+                    and what makes them exceptional. Get to know the real people behind the pieces.
+                </p>
+                <div class="step-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Verified Boutiques</strong><br>
+                            Real businesses with proven track records
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Unique Specialties</strong><br>
+                            Each boutique brings distinct expertise
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h2>Browse with Confidence</h2>
+                <p>
+                    Shop by category, brand, or explore individual boutique collections. 
+                    Every item includes detailed photos, complete descriptions, and 
+                    authentication information.
+                </p>
+                <p>
+                    Use our filters to narrow by price, size, condition, and boutique. 
+                    Save favorites to compare later or share with friends.
+                </p>
+                <div class="step-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Detailed Information</strong><br>
+                            Complete specs, materials, and measurements
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Transparent Pricing</strong><br>
+                            Clear pricing with no hidden fees
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h2>Purchase Directly</h2>
+                <p>
+                    When you find the perfect piece, purchase securely through the boutique's 
+                    checkout. Each boutique manages their own transactions, giving you direct 
+                    access to their expertise and customer service.
+                </p>
+                <p>
+                    You'll receive shipping updates, authentication certificates, and can 
+                    contact the boutique directly with any questions.
+                </p>
+                <div class="step-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Secure Checkout</strong><br>
+                            Protected payment through boutique
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Expert Service</strong><br>
+                            Direct communication with boutique
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h2>Receive & Enjoy</h2>
+                <p>
+                    Your item arrives beautifully packaged with all original accessories, 
+                    authentication documents, and care instructions. Each boutique takes 
+                    pride in delivering a luxury unboxing experience.
+                </p>
+                <p>
+                    If you have any questions or concerns, the boutique's team is there 
+                    to support you with personalized service.
+                </p>
+                <div class="step-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Premium Packaging</strong><br>
+                            Luxury presentation and protection
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <div class="feature-text">
+                            <strong>Ongoing Support</strong><br>
+                            Boutique available for any questions
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vetting Process -->
+    <section class="vetting-section">
+        <div class="vetting-container">
+            <h2 class="section-title">Our Vetting Process</h2>
+            <p class="section-subtitle">
+                Every boutique on Att-Las goes through a rigorous vetting process to 
+                ensure they meet our standards for expertise, authenticity, and service.
+            </p>
+            
+            <div class="vetting-grid">
+                <div class="vetting-item">
+                    <div class="vetting-icon">📋</div>
+                    <h3 class="vetting-title">Business Verification</h3>
+                    <p class="vetting-description">
+                        We verify business registration, physical location, and years in operation. 
+                        Only established boutiques with proven track records qualify.
+                    </p>
+                </div>
+                
+                <div class="vetting-item">
+                    <div class="vetting-icon">🔍</div>
+                    <h3 class="vetting-title">Authentication Expertise</h3>
+                    <p class="vetting-description">
+                        Each boutique must demonstrate expertise in authenticating luxury goods 
+                        and provide references from industry professionals.
+                    </p>
+                </div>
+                
+                <div class="vetting-item">
+                    <div class="vetting-icon">⭐</div>
+                    <h3 class="vetting-title">Reputation Review</h3>
+                    <p class="vetting-description">
+                        We check reviews, references, and industry standing to ensure 
+                        consistent quality and customer satisfaction.
+                    </p>
+                </div>
+                
+                <div class="vetting-item">
+                    <div class="vetting-icon">✓</div>
+                    <h3 class="vetting-title">Quality Standards</h3>
+                    <p class="vetting-description">
+                        Boutiques must meet our standards for product quality, accurate 
+                        descriptions, and professional photography.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <h2 class="section-title">Common Questions</h2>
+        
+        <div class="faq-item">
+            <h3 class="faq-question">How are items authenticated?</h3>
+            <p class="faq-answer">
+                Each boutique employs certified authentication experts who verify every piece 
+                before listing. They examine materials, construction, hardware, stamps, and 
+                serial numbers against manufacturer specifications. Authentication certificates 
+                are included with every purchase.
+            </p>
+        </div>
+        
+        <div class="faq-item">
+            <h3 class="faq-question">What if I need to return an item?</h3>
+            <p class="faq-answer">
+                Return policies are set by individual boutiques and clearly stated on each 
+                product page. Most boutiques offer returns within 7-14 days if the item is 
+                in original condition. Contact the boutique directly to arrange returns.
+            </p>
+        </div>
+        
+        <div class="faq-item">
+            <h3 class="faq-question">How does shipping work?</h3>
+            <p class="faq-answer">
+                Boutiques handle their own shipping using insured, tracked carriers. 
+                Shipping costs and delivery times are shown at checkout. Most European 
+                deliveries arrive within 3-5 business days.
+            </p>
+        </div>
+        
+        <div class="faq-item">
+            <h3 class="faq-question">Can I contact boutiques directly?</h3>
+            <p class="faq-answer">
+                Absolutely! Each boutique profile includes contact information. They're 
+                happy to answer questions about specific items, provide additional photos, 
+                or discuss their collection.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to Start Shopping?</h2>
+            <p>
+                Discover exceptional luxury pieces from trusted boutiques across Europe. 
+                Every item authenticated, every seller verified.
+            </p>
+            <div class="cta-buttons">
+                <a href="index.html#boutiques" class="cta-button cta-button-primary">Explore Boutiques</a>
+                <a href="category.html" class="cta-button cta-button-secondary">Shop Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body>
+</html>

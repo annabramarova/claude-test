@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermès Kelly 28 Sellier – Att-Las</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #FAF7F2;
+            --color-warm-gray: #E8E3DB;
+            --color-dark: #2A2520;
+            --color-accent: #4A5D3F;
+            --color-accent-light: #7A8D6F;
+            --color-border: #D4CFC5;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1.5rem 2rem;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--color-dark);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .search-icon, .menu-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .menu-icon {
+            display: none;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--color-cream);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--color-dark);
+        }
+        
+        .mobile-menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .mobile-menu-links li {
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .mobile-menu-links a {
+            display: block;
+            padding: 1.5rem 0;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 300;
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb-section {
+            margin-top: 80px;
+            padding: 2rem 2rem 1rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .breadcrumb {
+            font-size: 0.9rem;
+            color: #5A524A;
+        }
+        
+        .breadcrumb a {
+            color: var(--color-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Product Section */
+        .product-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 5rem;
+        }
+        
+        /* Image Gallery */
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 700px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        
+        .thumbnail {
+            height: 150px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+        }
+        
+        .thumbnail:hover {
+            border-color: var(--color-accent);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .thumbnail.active {
+            border-color: var(--color-accent);
+            box-shadow: 0 4px 20px rgba(74, 93, 63, 0.3);
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Product Info */
+        .product-info {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+        
+        .boutique-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-warm-gray);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .boutique-badge:hover {
+            background: var(--color-accent);
+            color: white;
+        }
+        
+        .product-brand {
+            font-size: 0.95rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .product-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        
+        .product-description {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #5A524A;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        /* Product Details */
+        .product-details {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .detail-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--color-dark);
+        }
+        
+        .detail-value {
+            color: #5A524A;
+        }
+        
+        .condition-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 2px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            width: 100%;
+            padding: 1.5rem;
+            background: var(--color-accent);
+            color: white;
+            border: none;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(74, 93, 63, 0.3);
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .cta-button:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .cta-button:hover {
+            background: var(--color-dark);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(42, 37, 32, 0.4);
+        }
+        
+        .cta-button:active {
+            transform: translateY(-2px) scale(1);
+            box-shadow: 0 8px 20px rgba(42, 37, 32, 0.3);
+        }
+        
+        .secondary-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .secondary-btn {
+            padding: 1rem;
+            background: white;
+            border: 1px solid var(--color-border);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .secondary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--color-dark);
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+        
+        .secondary-btn:hover::before {
+            left: 0;
+        }
+        
+        .secondary-btn:hover {
+            border-color: var(--color-dark);
+            color: white;
+        }
+        
+        .secondary-btn > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Trust Signals */
+        .trust-signals {
+            background: var(--color-warm-gray);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+        }
+        
+        .trust-icon {
+            font-size: 1.5rem;
+            color: var(--color-accent);
+        }
+        
+        .trust-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        /* Boutique Card */
+        .boutique-card {
+            background: white;
+            padding: 2rem;
+            border: 1px solid var(--color-border);
+            margin-top: 2rem;
+        }
+        
+        .boutique-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .boutique-card-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+        
+        .boutique-location {
+            color: #5A524A;
+            font-size: 0.9rem;
+        }
+        
+        .vetted-badge {
+            padding: 0.5rem 1rem;
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        
+        .boutique-description {
+            color: #5A524A;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .view-boutique-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--color-dark);
+            color: var(--color-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .view-boutique-btn:hover {
+            background: var(--color-dark);
+            color: white;
+        }
+        
+        /* Recommendations */
+        .recommendations {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background: white;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .recommendations h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .product-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .recommendation-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            background: var(--color-warm-gray);
+        }
+        
+        .recommendation-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .product-card:hover .recommendation-image img {
+            transform: scale(1.05);
+        }
+        
+        .rec-boutique {
+            font-size: 0.85rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .rec-name {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rec-price {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-icon {
+                display: block;
+            }
+            
+            .product-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1.5rem;
+            }
+            
+            .main-image {
+                height: 400px;
+            }
+            
+            .thumbnail-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .product-info {
+                position: static;
+            }
+            
+            .product-title {
+                font-size: 2rem;
+            }
+            
+            .recommendations-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .recommendation-image {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Att-Las</a>
+            <ul class="nav-links">
+                <li><a href="index.html#boutiques">Boutiques</a></li>
+                <li><a href="category.html">Shop</a></li>
+                <li><a href="index.html#new-in">New In</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                
+                <span class="menu-icon" onclick="toggleMobileMenu()">☰</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">×</button>
+        <ul class="mobile-menu-links">
+            <li><a href="index.html#boutiques" onclick="toggleMobileMenu()">Boutiques</a></li>
+            <li><a href="category.html" onclick="toggleMobileMenu()">Shop</a></li>
+            <li><a href="index.html#new-in" onclick="toggleMobileMenu()">New In</a></li>
+            <li><a href="about.html" onclick="toggleMobileMenu()">About</a></li>
+            <li><a href="how-it-works.html" onclick="toggleMobileMenu()">How It Works</a></li>
+        </ul>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-section">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> / 
+            <a href="category.html">Handbags</a> / 
+            <a href="#">Hermès</a> / 
+            Kelly 28 Sellier
+        </div>
+    </div>
+
+    <!-- Product Section -->
+    <section class="product-section">
+        <!-- Image Gallery -->
+        <div class="product-gallery">
+            <div class="main-image">
+                <img id="mainImage" src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&h=1000&fit=crop" alt="Hermès Kelly 28">
+            </div>
+            
+            <div class="thumbnail-grid">
+                <div class="thumbnail active" onclick="changeImage('https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&h=1000&fit=crop', this)">
+                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=200&h=200&fit=crop" alt="View 1">
+                </div>
+                <div class="thumbnail" onclick="changeImage('https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&h=1000&fit=crop', this)">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&h=200&fit=crop" alt="View 2">
+                </div>
+                <div class="thumbnail" onclick="changeImage('https://images.unsplash.com/photo-1564422170194-896b89110ef8?w=800&h=1000&fit=crop', this)">
+                    <img src="https://images.unsplash.com/photo-1564422170194-896b89110ef8?w=200&h=200&fit=crop" alt="View 3">
+                </div>
+                <div class="thumbnail" onclick="changeImage('https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&h=1000&fit=crop', this)">
+                    <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=200&h=200&fit=crop" alt="View 4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+            <div class="boutique-badge" onclick="window.location.href='boutique.html'">
+                Sold by Maison Belle →
+            </div>
+            
+            <div class="product-brand">Hermès</div>
+            <h1 class="product-title">Kelly 28 Sellier Black Epsom Gold Hardware</h1>
+            <div class="product-price">€8,500</div>
+            
+            <p class="product-description">
+                An iconic Hermès Kelly 28 in timeless black Epsom leather with gleaming gold 
+                hardware. This sophisticated piece features the classic sellier (rigid) construction, 
+                perfectly sized for everyday elegance. Includes original dust bag, box, and ribbon.
+            </p>
+            
+            <div class="product-details">
+                <div class="detail-row">
+                    <div class="detail-label">Condition</div>
+                    <div class="detail-value">
+                        <span class="condition-badge">Excellent</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Size</div>
+                    <div class="detail-value">28cm (W) × 22cm (H) × 10cm (D)</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Material</div>
+                    <div class="detail-value">Epsom Leather</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Color</div>
+                    <div class="detail-value">Black (Noir)</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Hardware</div>
+                    <div class="detail-value">Gold Plated</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Year</div>
+                    <div class="detail-value">2018 (Stamp: R)</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Includes</div>
+                    <div class="detail-value">Dust bag, Box, Ribbon, Authenticity card</div>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <button class="cta-button" onclick="alert('This redirects to the boutique\'s checkout page')">
+                    Buy from Maison Belle
+                </button>
+                
+                <div class="secondary-actions">
+                    <button class="secondary-btn">
+                        ♡ Save
+                    </button>
+                    <button class="secondary-btn">
+                        ↗ Share
+                    </button>
+                </div>
+            </div>
+            
+            <div class="trust-signals">
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <div class="trust-text">
+                        <strong>Authenticated</strong><br>
+                        Verified by luxury authentication experts
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">◇</span>
+                    <div class="trust-text">
+                        <strong>Vetted Seller</strong><br>
+                        From Att-Las verified boutique
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">⟡</span>
+                    <div class="trust-text">
+                        <strong>Secure Purchase</strong><br>
+                        Protected transaction through boutique
+                    </div>
+                </div>
+            </div>
+            
+            <div class="boutique-card">
+                <div class="boutique-card-header">
+                    <div>
+                        <h3 class="boutique-card-title">Maison Belle</h3>
+                        <p class="boutique-location">📍 Paris, France</p>
+                    </div>
+                    <div class="vetted-badge">Att-Las Vetted</div>
+                </div>
+                <p class="boutique-description">
+                    Established luxury boutique specializing in authenticated Hermès bags 
+                    and French designer pieces. 15+ years of expertise.
+                </p>
+                <a href="boutique.html" class="view-boutique-btn">View Boutique Profile</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommendations -->
+    <section class="recommendations">
+        <h2>You May Also Like</h2>
+        <div class="recommendations-grid">
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="recommendation-image">
+                    <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="rec-boutique">Maison Belle</div>
+                <div class="rec-name">Chanel Classic Flap</div>
+                <div class="rec-price">€5,800</div>
+            </div>
+            
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="recommendation-image">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="rec-boutique">Luna Luxury</div>
+                <div class="rec-name">Prada Saffiano Tote</div>
+                <div class="rec-price">€1,200</div>
+            </div>
+            
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="recommendation-image">
+                    <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="rec-boutique">The Edit</div>
+                <div class="rec-name">Louis Vuitton Neverfull</div>
+                <div class="rec-price">€950</div>
+            </div>
+            
+            <div class="product-card" onclick="window.location.href='product.html'">
+                <div class="recommendation-image">
+                    <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&h=600&fit=crop" alt="Product">
+                </div>
+                <div class="rec-boutique">Luxe Collective</div>
+                <div class="rec-name">Gucci Dionysus</div>
+                <div class="rec-price">€1,450</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function changeImage(src, thumbnail) {
+            document.getElementById('mainImage').src = src;
+            
+            // Remove active class from all thumbnails
+            document.querySelectorAll('.thumbnail').forEach(t => {
+                t.classList.remove('active');
+            });
+            
+            // Add active class to clicked thumbnail
+            thumbnail.classList.add('active');
+        }
+    </script>
+</body>
+</html>
